@@ -10,6 +10,8 @@ extern "C" {
 
 void rust_function();
 
+void rust_ffi(void (*say)());
+
 #ifdef __cplusplus
 }
 #endif

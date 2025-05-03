@@ -7,6 +7,13 @@ pub extern "C" fn rust_function() {
     println!("Hello from Rust!");
 }
 
+#[no_mangle]
+pub extern "C" fn rust_ffi(say: extern "C" fn()) {
+    println!("Hello from FFI!");
+    say();
+}
+
+
 #[cfg(test)]
 mod tests {
     use super::*;
