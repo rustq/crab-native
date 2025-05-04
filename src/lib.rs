@@ -1,3 +1,6 @@
+use std::thread;
+use std::time;
+
 pub fn add(left: u64, right: u64) -> u64 {
     left + right
 }
@@ -8,9 +11,16 @@ pub extern "C" fn rust_function() {
 }
 
 #[no_mangle]
-pub extern "C" fn rust_ffi(say: extern "C" fn()) {
-    println!("Hello from FFI!");
-    say();
+pub extern "C" fn rust_ffi(say: extern "C" fn(x: i32, y: i32, width: i32, height: i32)) {
+    println!("Hello from FFI! hey!");
+    thread::spawn(move || {
+        thread::sleep(time::Duration::from_secs(1));
+        say(100, 100, 100, 100);
+        thread::sleep(time::Duration::from_secs(1));
+        say(100, 200, 100, 100);
+        thread::sleep(time::Duration::from_secs(1));
+        say(100, 300, 100, 100);
+    });
 }
 
 

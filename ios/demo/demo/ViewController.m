@@ -10,11 +10,12 @@
 
 @interface ViewController ()
 + (UIView *)activeView;
-+ (void)addActiveButton;
++ (void)addActiveButton:(int)x y:(int)y width:(int)width height:(int)height;
 @end
 
-void say() {
-    [ViewController addActiveButton];
+void say(int x, int y, int width, int height) {
+    NSLog(@"HIHIHI");
+    [ViewController addActiveButton:x y:y width:width height:height];
 }
 
 @implementation ViewController
@@ -26,7 +27,6 @@ static UIView *activeView = nil;
     [ViewController setActiveView: self.view];
     rust_function();
     rust_ffi(say);
-    [self addButton];
     // Do any additional setup after loading the view.
 }
 
@@ -40,20 +40,13 @@ static UIView *activeView = nil;
     activeView = view;
 }
 
-+ (void)addActiveButton {
-    UIButton *button = [UIButton buttonWithType:UIButtonTypeSystem];
-    button.frame = CGRectMake(100, 200, 150, 50);
-    [button setTitle:@"I am active" forState:UIControlStateNormal];
-    [[ViewController activeView] addSubview:button];
++ (void)addActiveButton:(int)x y:(int)y width:(int)width height:(int)height {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        UIButton *button = [UIButton buttonWithType:UIButtonTypeSystem];
+        button.frame = CGRectMake(x, y, width, height);
+        [button setTitle:@"I am active" forState:UIControlStateNormal];
+        [[ViewController activeView] addSubview:button];
+    });
 }
-
-- (void)addButton {
-    // 创建按钮
-    UIButton *button = [UIButton buttonWithType:UIButtonTypeSystem];
-    button.frame = CGRectMake(100, 100, 150, 50); // 设置位置和大小
-    [button setTitle:@"点击我" forState:UIControlStateNormal];
-    [self.view addSubview:button];
-}
-
 
 @end
