@@ -11,15 +11,15 @@ pub extern "C" fn rust_function() {
 }
 
 #[no_mangle]
-pub extern "C" fn rust_ffi(say: extern "C" fn(x: i32, y: i32, width: i32, height: i32)) {
+pub extern "C" fn rust_ffi(add_ui: extern "C" fn(tp: i32, x: i32, y: i32, width: i32, height: i32)) {
     println!("Hello from FFI! hey!");
     thread::spawn(move || {
         thread::sleep(time::Duration::from_secs(1));
-        say(100, 100, 100, 100);
+        add_ui(0, 100, 100, 100, 100);
         thread::sleep(time::Duration::from_secs(1));
-        say(100, 200, 100, 100);
+        add_ui(1, 100, 200, 100, 100);
         thread::sleep(time::Duration::from_secs(1));
-        say(100, 300, 100, 100);
+        add_ui(1, 100, 300, 100, 100);
     });
 }
 

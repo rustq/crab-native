@@ -11,11 +11,20 @@
 @interface ViewController ()
 + (UIView *)activeView;
 + (void)addActiveButton:(int)x y:(int)y width:(int)width height:(int)height;
++ (void)addActiveLabel:(int)x y:(int)y width:(int)width height:(int)height;
 @end
 
-void say(int x, int y, int width, int height) {
-    NSLog(@"HIHIHI");
-    [ViewController addActiveButton:x y:y width:width height:height];
+void addUI(int type, int x, int y, int width, int height) {
+    switch (type) {
+        case 0:
+            [ViewController addActiveButton:x y:y width:width height:height];
+            break;
+        case 1:
+            [ViewController addActiveLabel:x y:y width:width height:height];
+            break;
+        default:
+            break;
+    }
 }
 
 @implementation ViewController
@@ -26,7 +35,7 @@ static UIView *activeView = nil;
     [super viewDidLoad];
     [ViewController setActiveView: self.view];
     rust_function();
-    rust_ffi(say);
+    rust_ffi(addUI);
     // Do any additional setup after loading the view.
 }
 
@@ -46,6 +55,14 @@ static UIView *activeView = nil;
         button.frame = CGRectMake(x, y, width, height);
         [button setTitle:@"I am active" forState:UIControlStateNormal];
         [[ViewController activeView] addSubview:button];
+    });
+}
+
++ (void)addActiveLabel:(int)x y:(int)y width:(int)width height:(int)height {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(x, y, width, height)];
+        label.text = @"Hi";
+        [[ViewController activeView] addSubview:label];
     });
 }
 
