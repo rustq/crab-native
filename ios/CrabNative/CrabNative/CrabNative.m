@@ -7,11 +7,17 @@
 
 #import "CrabNative.h"
 
-@implementation CrabNative
+@implementation CrabNativeView
 
-+ (UIView *)createViewWithFrame:(CGRect)frame {
-    UIView *view = [[UIView alloc] initWithFrame:frame];
-    return view;
+- (instancetype)initWithFrame:(CGRect)frame {
+    self = [super initWithFrame:frame];
+    return self;
+}
+
+- (UITextView *)createTextWithContent:(NSString *)content {
+    UITextView *textView = [[UITextView alloc] init];
+    textView.text = content;
+    return textView;
 }
 
 @end

@@ -8,8 +8,8 @@
 #import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
 
-@interface CrabNative : NSObject
+@interface CrabNativeView : UIView
 
-+ (UIView *)createViewWithFrame:(CGRect)frame;
+- (UITextView *)createTextWithContent:(NSString *)content;
 
 @end
