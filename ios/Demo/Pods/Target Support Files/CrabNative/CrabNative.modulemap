@@ -1,0 +1,6 @@
+framework module CrabNative {
+  umbrella header "CrabNative-umbrella.h"
+
+  export *
+  module * { export * }
+}
